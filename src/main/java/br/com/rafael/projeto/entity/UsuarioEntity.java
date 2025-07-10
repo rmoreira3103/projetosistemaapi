@@ -5,8 +5,11 @@ import java.util.Objects;
 import org.springframework.beans.BeanUtils;
 
 import br.com.rafael.projeto.dto.UsuarioDTO;
+import br.com.rafael.projeto.entity.enums.TipoSituacaoUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,10 +35,16 @@ public class UsuarioEntity {
 	@Column(nullable = false)
 	private String email;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private TipoSituacaoUsuario situacao;
+	
 	public UsuarioEntity(UsuarioDTO usuario) {
 		BeanUtils.copyProperties(usuario, this);
 	}
+	
 	public UsuarioEntity() {
+		
 		}
 	
 	public Long getId() {
@@ -82,6 +91,14 @@ public class UsuarioEntity {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+	
+	public TipoSituacaoUsuario getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(TipoSituacaoUsuario situacao) {
+		this.situacao = situacao;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -93,5 +110,7 @@ public class UsuarioEntity {
 			return false;
 		UsuarioEntity other = (UsuarioEntity) obj;
 		return Objects.equals(id, other.id);
-	}	
+	}
+
+		
 }
